@@ -1,0 +1,5 @@
+chatbot/
+models/
+awsmodel/
+__pycache__/
+.env
