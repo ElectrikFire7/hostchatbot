@@ -41,9 +41,10 @@ def initialize_model(model_path):
 def generate_text(sequence, max_length=30):
     try:
         ids = tokenizer.encode(f'{sequence}', return_tensors='pt')
+        attention_mask = torch.ones(ids.shape, dtype=torch.long)
+        print(ids)
     except Exception as e:
         print(e)
-    attention_mask = torch.ones(ids.shape, dtype=torch.long)
     final_outputs = model.generate(
         ids,
         do_sample=True,
