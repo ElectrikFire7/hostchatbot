@@ -38,8 +38,11 @@ def initialize_model(model_path):
     tokenizer = GPT2Tokenizer.from_pretrained(model_path)
     print("successfully loaded model")
 
-def generate_text(sequence, max_length):
-    ids = tokenizer.encode(f'{sequence}', return_tensors='pt')
+def generate_text(sequence, max_length=30):
+    try:
+        ids = tokenizer.encode(f'{sequence}', return_tensors='pt')
+    except Exception as e:
+        print(e)
     attention_mask = torch.ones(ids.shape, dtype=torch.long)
     final_outputs = model.generate(
         ids,
@@ -73,7 +76,9 @@ def chat():
     
     chat_id = user.get('chat_id', None)
     
-    prompt = data.get('prompt', '')
+    prompt = data.get('prompt')
+    if not prompt:
+        return jsonify({"error": "prompt is required"})
     max_length = data.get('max_length', 30)
 
     response_text = generate_text(prompt, max_length)
@@ -98,7 +103,7 @@ if __name__ == "__main__":
     S3_MODEL_PATH = "basic_gpt_2"
     LOCAL_MODEL_PATH = "./awsmodel"
     
-    download_model_from_s3(BUCKET_NAME, S3_MODEL_PATH, LOCAL_MODEL_PATH)
+    #download_model_from_s3(BUCKET_NAME, S3_MODEL_PATH, LOCAL_MODEL_PATH)
     initialize_model(LOCAL_MODEL_PATH)
 
     app.run()
