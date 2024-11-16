@@ -104,7 +104,7 @@ if __name__ == "__main__":
     S3_MODEL_PATH = "basic_gpt_2"
     LOCAL_MODEL_PATH = "./awsmodel"
     
-    #download_model_from_s3(BUCKET_NAME, S3_MODEL_PATH, LOCAL_MODEL_PATH)
+    download_model_from_s3(BUCKET_NAME, S3_MODEL_PATH, LOCAL_MODEL_PATH)
     initialize_model(LOCAL_MODEL_PATH)
 
     app.run()
