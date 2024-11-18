@@ -107,4 +107,4 @@ if __name__ == "__main__":
     download_model_from_s3(BUCKET_NAME, S3_MODEL_PATH, LOCAL_MODEL_PATH)
     initialize_model(LOCAL_MODEL_PATH)
 
-    app.run()
+    app.run(port=443)
